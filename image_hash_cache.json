@@ -1,0 +1,28 @@
+{
+  "c0c59582b0e912fb900590d83a18b38f13c7d2cad2dc40a33f17afa534a170a8": {
+    "signer": "era",
+    "location": "Unknown",
+    "timestamp": "2025-05-02T11:36:58.044Z",
+    "ipfs": "https://bafkreigaywkyfmhjcl5zabmq3a5brm4pcpd5fsws3rakgpyxv6stjilqva.ipfs.nftstorage.link/"
+  },
+  "4d059bdaf8499ef3c496515c5bf4d01f13bf8beaf610aa17907fdb3d8bd9bd49": {
+    "ipfsCID": "bafkreicnawn5v6cjt3z4jfsrlrn7jua7co7yx2xwccvbped73m6yxwn5je",
+    "timestamp": "2025-05-05T19:13:29.344Z",
+    "signer": "Era Kalaja, Worcester Polytechnic Institute",
+    "location": "Unknown",
+    "imageTimestamp": null,
+    "cameraModel": null,
+    "software": null,
+    "make": null
+  },
+  "0bf1f1d34466235f535af3297eff662543d579ff6717b3bb0ab13cbb8b60ea9b": {
+    "ipfsCID": "bafkreial6hy5grdgenpvgwxtff7p6zrfipkxt73hc6z3wcvrhs5ywyhktm",
+    "timestamp": "2025-05-05T19:14:04.914Z",
+    "signer": "Era Kalaja, Worcester Polytechnic Institute",
+    "location": "Unknown",
+    "imageTimestamp": "2025-04-06T14:47:06.000Z",
+    "cameraModel": "iPhone 14 Pro",
+    "software": "16.3.1",
+    "make": "Apple"
+  }
+}

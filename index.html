@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Certify Image on Cardano</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <style>
+    #progressBar {
+      width: 100%;
+      background-color: #e0e0e0;
+      height: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 20px;
+    }
+
+    #progressBarInner {
+      width: 0%;
+      height: 100%;
+      background-color: #3498db;
+      text-align: center;
+      color: white;
+      font-size: 13px;
+      line-height: 20px;
+      transition: width 0.3s ease;
+    }
+
+    .step-msg {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f8f9fa;
+      border-left: 4px solid #3498db;
+      border-radius: 6px;
+      text-align: left;
+    }
+
+    .toggle-inputs {
+      display: flex;
+      gap: 15px;
+      margin: 10px 0 20px;
+      justify-content: flex-start;
+    }
+
+    .toggle-inputs label {
+      font-weight: 500;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+
+    .toggle-inputs input[type="radio"] {
+      accent-color: #4B456B;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Certify Your Image</h1>
+    <p>Easily verify an image’s authenticity and embed its origin on the Cardano blockchain.</p>
+
+    <form id="uploadForm">
+      <div class="form-group">
+        <label class="section-title">Upload Method</label>
+        <div class="toggle-inputs">
+          <label><input type="radio" name="inputType" value="file" checked> Upload File</label>
+          <label><input type="radio" name="inputType" value="url"> Use Image URL</label>
+        </div>
+      </div>
+
+      <div class="form-group" id="fileInputDiv">
+        <label for="myfile"><strong>Select an image file:</strong></label>
+        <input type="file" id="myfile" name="myfile" accept="image/*" required />
+      </div>
+
+      <div class="form-group" id="urlInputDiv" style="display: none;">
+        <label for="imageUrl"><strong>Image URL:</strong></label>
+        <input type="url" id="imageUrl" name="imageUrl" placeholder="https://example.com/image.jpg" />
+      </div>
+
+      <div class="form-group">
+        <label for="signer"><strong>Your Name:</strong></label>
+        <input type="text" name="signer" placeholder="e.g., Jane Doe" required />
+        <small class="input-help">Used to record who certified the image.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="license"><strong>License Type:</strong></label>
+        <input type="text" name="license" placeholder="e.g., CC BY-NC-ND 4.0" />
+        <small class="input-help">This tells others how your image can be legally used.</small>
+      </div>
+
+      <div class="form-group">
+        <label for="usage"><strong>Usage Permissions:</strong></label>
+        <input type="text" name="usage" placeholder="e.g., Editorial use only" />
+        <small class="input-help">Specify restrictions like 'no commercial use'.</small>
+      </div>
+
+      <button type="submit" class="upload-btn">📤 Certify Image</button>
+    </form>
+
+    <div id="progressBar"><div id="progressBarInner">0%</div></div>
+    <div id="message"></div>
+
+    <p style="margin-top: 30px;">Want to verify an image instead?</p>
+    <button onclick="location.href='verify.html'" class="upload-btn">🔍 Go to Verification Page</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

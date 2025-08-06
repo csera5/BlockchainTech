@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verify Image Authenticity</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+</head>
+<body>
+  <div class="container">
+    <h1>Verify an Image</h1>
+    <p>Upload an image to check if it has been certified on the Cardano blockchain.</p>
+
+    <form id="verifyForm">
+      <label for="verifyfile"><strong>Select an image:</strong></label>
+      <input type="file" id="verifyfile" name="verifyfile" accept="image/*" required />
+      <img id="verifyPreviewLocal" src="" alt="Selected Image Preview" style="display: none;" />
+      <button type="submit" class="upload-btn">🔍 Check Authenticity</button>
+    </form>
+
+    <div id="verify-message"></div>
+    <div id="blockchainImage"></div>
+
+    <p style="margin-top: 30px;">Want to certify your own image instead?</p>
+    <button onclick="location.href='index.html'" class="upload-btn">📤 Go to Upload Page</button>
+  </div>
+
+  <script>
+    document.getElementById('verifyfile').addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      const preview = document.getElementById('verifyPreviewLocal');
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.src = e.target.result;
+          preview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        preview.style.display = 'none';
+      }
+    });
+
+    document.getElementById('verifyForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const file = document.getElementById('verifyfile').files[0];
+      const message = document.getElementById('verify-message');
+      const blockchainImageContainer = document.getElementById('blockchainImage');
+
+      message.innerHTML = '⏳ Verifying image against blockchain records...';
+      blockchainImageContainer.innerHTML = '';
+
+      const formData = new FormData();
+      formData.append('verifyfile', file);
+
+      try {
+        const res = await fetch('/verify-image', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await res.json();
+
+        if (result.match) {
+          message.innerHTML = `
+            <div style="border: 1px solid #27ae60; background: #e8f5e9; padding: 16px; border-radius: 8px;">
+              <div style="font-size: 18px; margin-bottom: 10px;">✅ <strong>Image is certified!</strong></div>
+              <p><strong>🕒 Timestamp:</strong> ${result.timestamp || "Unknown"}</p>
+              <p><strong>👤 Signed by:</strong> ${result.signer || "Unknown"}</p>
+              <p><strong>📷 Camera Model:</strong> ${result.cameraModel || "Unknown"}</p>
+              <p><strong>🏭 Make:</strong> ${result.make || "Unknown"}</p>
+              <p><strong>🛠️ Software:</strong> ${result.software || "Unknown"}</p>
+            </div>`;
+
+          if (result.ipfs) {
+            blockchainImageContainer.innerHTML = `
+              <h3 style="margin-top: 30px;">Image on Blockchain:</h3>
+              <img src="${result.ipfs}" alt="Blockchain Registered Image" />
+            `;
+          }
+        } else {
+          message.innerHTML = `
+            <div style="border: 1px solid #e74c3c; background: #fdecea; padding: 16px; border-radius: 8px; color: #000;">
+              ❌ <strong>Image not found on blockchain.</strong><br>
+              Hash: <code>${result.hash}</code>
+            </div>
+          `;
+        }
+      } catch (err) {
+        message.innerHTML = `<div style="color: red;">❌ Error verifying image: ${err.message}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>
